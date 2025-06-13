@@ -12,7 +12,7 @@ namespace ProductClient.API.UseCases.Clients.Register
 
             if (!result.IsValid)
             {
-                throw new ArgumentException("Error on received data.");
+                throw new ArgumentException(string.Join(" ", result.Errors.Select(msg => msg.ErrorMessage)));
             }
 
             return new ResponseClientJson { Id = Guid.NewGuid(), Name = request.Name };

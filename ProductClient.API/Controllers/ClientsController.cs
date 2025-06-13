@@ -11,13 +11,26 @@ namespace ProductClient.API.Controllers
     {
         [HttpPost]
         [ProducesResponseType(typeof(ResponseClientJson), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(Exception), StatusCodes.Status500InternalServerError)]
         public IActionResult Register([FromBody] RequestClientJson request)
         {
-            var useCaseRegister = new RegisterClientUseCase();
+            try
+            {
+                var useCaseRegister = new RegisterClientUseCase();
 
-            var response = useCaseRegister.Execute(request);
+                var response = useCaseRegister.Execute(request);
 
-            return Created(string.Empty, response);
+                return Created(string.Empty, response);
+            } 
+            catch (ArgumentException err)
+            {
+                return BadRequest(new ResponseErrorMessagesJson(err.Message));
+            }
+            catch (Exception err)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseErrorMessagesJson(err.Message));
+            }
         }
 
         [HttpPut]
