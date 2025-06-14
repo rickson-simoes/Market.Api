@@ -1,5 +1,6 @@
 ﻿using ProductClient.Communication.Requests;
 using ProductClient.Communication.Responses;
+using ProductClient.Exceptions.ExceptionsBase;
 
 namespace ProductClient.API.UseCases.Clients.Register
 {
@@ -12,7 +13,9 @@ namespace ProductClient.API.UseCases.Clients.Register
 
             if (!result.IsValid)
             {
-                throw new ArgumentException(string.Join(" ", result.Errors.Select(msg => msg.ErrorMessage)));
+                List<string> teste = result.Errors.Select(er => er.ErrorMessage).ToList();
+
+                throw new ErrorOnValidationException(teste);
             }
 
             return new ResponseClientJson { Id = Guid.NewGuid(), Name = request.Name };
