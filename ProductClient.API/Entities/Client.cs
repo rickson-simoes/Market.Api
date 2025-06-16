@@ -1,6 +1,9 @@
-﻿namespace ProductClient.API.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ProductClient.API.Entities
 {
-    public class Clients
+    [Table("Clients")]
+    public class Client
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;

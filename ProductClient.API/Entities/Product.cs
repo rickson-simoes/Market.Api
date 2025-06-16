@@ -1,6 +1,10 @@
-﻿namespace ProductClient.API.Entities
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ProductClient.API.Entities
 {
-    public class Products
+
+    [Table("Products")]
+    public class Product
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
