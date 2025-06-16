@@ -1,4 +1,6 @@
 
+using ProductClient.API.Filters;
+
 namespace ProductClient.API
 {
     public class Program
@@ -13,6 +15,9 @@ namespace ProductClient.API
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            //Add exception ExceptionFilter
+            builder.Services.AddMvc(opt => opt.Filters.Add(typeof(ExceptionFilter)));
 
             var app = builder.Build();
 

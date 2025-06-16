@@ -16,24 +16,11 @@ namespace ProductClient.API.Controllers
         [ProducesResponseType(typeof(Exception), StatusCodes.Status500InternalServerError)]
         public IActionResult Register([FromBody] RequestClientJson request)
         {
-            try
-            {
-                var useCaseRegister = new RegisterClientUseCase();
+            var useCaseRegister = new RegisterClientUseCase();
 
-                var response = useCaseRegister.Execute(request);
+            var response = useCaseRegister.Execute(request);
 
-                return Created(string.Empty, response);
-            } 
-            catch (ProductClientHubException err)
-            {
-                List<string> errors = err.GetErrors();
-
-                return BadRequest(new ResponseErrorMessagesJson(errors));
-            }
-            catch (Exception err)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseErrorMessagesJson(err.Message));
-            }
+            return Created(string.Empty, response);
         }
 
         [HttpPut]
