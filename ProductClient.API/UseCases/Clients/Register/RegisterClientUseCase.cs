@@ -13,9 +13,9 @@ namespace ProductClient.API.UseCases.Clients.Register
 
             if (!result.IsValid)
             {
-                List<string> teste = result.Errors.Select(er => er.ErrorMessage).ToList();
+                List<string> errors = result.Errors.Select(er => er.ErrorMessage).ToList();
 
-                throw new ErrorOnValidationException(teste);
+                throw new ErrorOnValidationException(errors);
             }
 
             return new ResponseClientJson { Id = Guid.NewGuid(), Name = request.Name };

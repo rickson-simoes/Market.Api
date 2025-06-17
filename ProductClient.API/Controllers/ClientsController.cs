@@ -2,7 +2,6 @@
 using ProductClient.API.UseCases.Clients.Register;
 using ProductClient.Communication.Requests;
 using ProductClient.Communication.Responses;
-using ProductClient.Exceptions.ExceptionsBase;
 
 namespace ProductClient.API.Controllers
 {
