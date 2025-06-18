@@ -1,8 +1,8 @@
-﻿using ProductClient.API.Infrastructure;
+﻿using ProductClient.API.Entities;
+using ProductClient.API.Infrastructure;
+using ProductClient.API.UseCases.Clients.Shared;
 using ProductClient.Communication.Requests;
 using ProductClient.Communication.Responses;
-using ProductClient.Exceptions.ExceptionsBase;
-using ProductClient.API.Entities;
 
 namespace ProductClient.API.UseCases.Clients.Register
 {
@@ -10,7 +10,8 @@ namespace ProductClient.API.UseCases.Clients.Register
     {
         public ResponseClientJson Execute(RequestClientJson request)
         {
-            Validate(request);
+            var validator = new RequestClientValidator();
+            validator.ValidateClientData(request);
 
             var dbContext = new ProductClientHubDbContext();
 
@@ -24,19 +25,6 @@ namespace ProductClient.API.UseCases.Clients.Register
             dbContext.SaveChanges();
 
             return new ResponseClientJson { Id = client.Id, Name = client.Name };
-        }
-
-        private static void Validate(RequestClientJson request)
-        {
-            var register = new RegisterClientValidator();
-            var result = register.Validate(request);
-
-            if (!result.IsValid)
-            {
-                List<string> errors = result.Errors.Select(er => er.ErrorMessage).ToList();
-
-                throw new ErrorOnValidationException(errors);
-            }
         }
     }
 }
