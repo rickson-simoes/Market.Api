@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProductClient.API.UseCases.Clients.Get;
 using ProductClient.API.UseCases.Clients.Register;
 using ProductClient.Communication.Requests;
 using ProductClient.Communication.Responses;
@@ -12,7 +13,6 @@ namespace ProductClient.API.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(ResponseClientJson), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(typeof(Exception), StatusCodes.Status500InternalServerError)]
         public IActionResult Register([FromBody] RequestClientJson request)
         {
             var useCaseRegister = new RegisterClientUseCase();
@@ -29,9 +29,18 @@ namespace ProductClient.API.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(ResponseAllClientsJson), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         public IActionResult GetAll() 
         {
-            return Ok();
+            var useCaseGetAll = new GetAllClientsUseCase();
+
+            IQueryable<ResponseAllClientsJson> response = useCaseGetAll.Execute();
+
+            if (response.Count() == 0)
+                return NoContent();
+
+            return Ok(response);
         }
 
         [HttpGet]

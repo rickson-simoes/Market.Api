@@ -18,6 +18,7 @@ namespace ProductClient.API
 
             //Add exception ExceptionFilter
             builder.Services.AddMvc(opt => opt.Filters.Add(typeof(ExceptionFilter)));
+            builder.Services.AddControllers().AddJsonOptions(opt => opt.JsonSerializerOptions.PropertyNamingPolicy = null);
 
             var app = builder.Build();
 
