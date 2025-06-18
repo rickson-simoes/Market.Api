@@ -18,6 +18,8 @@ namespace ProductClient.API
 
             //Add exception ExceptionFilter
             builder.Services.AddMvc(opt => opt.Filters.Add(typeof(ExceptionFilter)));
+
+            // Add property case sensitive
             builder.Services.AddControllers().AddJsonOptions(opt => opt.JsonSerializerOptions.PropertyNamingPolicy = null);
 
             var app = builder.Build();
