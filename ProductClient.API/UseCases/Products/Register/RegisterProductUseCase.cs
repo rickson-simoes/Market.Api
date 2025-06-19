@@ -30,7 +30,7 @@ namespace ProductClient.API.UseCases.Products.Register
             dbContext.Products.Add(product);
             await dbContext.SaveChangesAsync();
 
-            ResponseProductJson response = new ResponseProductJson
+            ResponseProductJson response = new ()
             {
                 Name = product.Name,
                 Brand = product.Brand,
