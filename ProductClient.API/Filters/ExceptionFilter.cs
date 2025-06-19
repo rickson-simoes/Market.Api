@@ -23,7 +23,6 @@ namespace ProductClient.API.Filters
                     break;
                 }
             }
-
         }
 
         private void ThrowUnkownError(ExceptionContext context)
