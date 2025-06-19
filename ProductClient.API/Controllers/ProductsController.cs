@@ -11,6 +11,7 @@ namespace ProductClient.API.Controllers
     {
         [HttpPost]
         [ProducesResponseType(typeof(ResponseProductJson), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register([FromBody] RequestProductJson request)
         {
