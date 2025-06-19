@@ -8,8 +8,12 @@ namespace ProductClient.API.UseCases.Clients.Shared
     {
         public RequestClientValidator()
         {
-            RuleFor(client => client.Name).NotEmpty().WithMessage("Name can't be null.");
-            RuleFor(client => client.Email).EmailAddress().WithMessage("Email is not valid.");
+            RuleFor(client => client.Name)
+                .NotEmpty().WithMessage("Name can't be null.")
+                .Length(1, 30).WithMessage("Name must have only 30 characters max.");
+            RuleFor(client => client.Email)
+                .EmailAddress().WithMessage("Email is not valid.")
+                .Length(1, 50).WithMessage("Please choose a smaller email account, max: 50 characters."); ;
         }
 
         public void ValidateClientData(RequestClientJson request)

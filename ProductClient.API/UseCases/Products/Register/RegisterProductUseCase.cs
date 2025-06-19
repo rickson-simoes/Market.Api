@@ -1,7 +1,44 @@
-﻿namespace ProductClient.API.UseCases.Products.Register
+﻿using ProductClient.API.Entities;
+using ProductClient.API.Infrastructure;
+using ProductClient.API.UseCases.Clients.Shared;
+using ProductClient.API.UseCases.Products.Shared;
+using ProductClient.Communication.Requests;
+using ProductClient.Communication.Responses;
+
+namespace ProductClient.API.UseCases.Products.Register
 {
     public class RegisterProductUseCase
     {
+        public async Task<ResponseProductJson> Execute(RequestProductJson request)
+        {
+            var dbContext = new ProductClientHubDbContext();
 
+            var validator = new RequestProductValidator();
+            validator.ValidateProductData(request);
+
+            // Todo: change decimal to int
+            var product = new Product
+            {
+                Name = request.Name,
+                Brand = request.Brand,
+                Price = request.Price,
+                ClientId = request.ClientId
+            };
+
+            await FindClientById.Execute(dbContext, product.ClientId);
+
+            dbContext.Products.Add(product);
+            await dbContext.SaveChangesAsync();
+
+            ResponseProductJson response = new ResponseProductJson
+            {
+                Name = product.Name,
+                Brand = product.Brand,
+                Price = product.Price,
+                Id = product.Id
+            };
+
+            return response;
+        }
     }
 }
