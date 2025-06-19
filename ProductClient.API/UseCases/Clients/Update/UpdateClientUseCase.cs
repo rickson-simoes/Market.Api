@@ -7,13 +7,11 @@ namespace ProductClient.API.UseCases.Clients.Update
 {
     public class UpdateClientUseCase
     {
-        public void Execute(Guid id, RequestClientJson request)
+        public async Task Execute(Guid id, RequestClientJson request)
         {
             var dbContext = new ProductClientHubDbContext();
 
-            var user = dbContext.Clients.FirstOrDefault(c => c.Id == id);
-            if (user == null)
-                throw new ClientNotFoundException("User not found");
+            var user = await FindClientById.Execute(dbContext, id);
 
             var validator = new RequestClientValidator();
             validator.ValidateClientData(request);
@@ -22,8 +20,7 @@ namespace ProductClient.API.UseCases.Clients.Update
             user.Email = request.Email;
 
             dbContext.Clients.Update(user);
-            dbContext.SaveChanges();
-
+            await dbContext.SaveChangesAsync();
         }
     }
 }

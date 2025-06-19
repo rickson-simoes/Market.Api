@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProductClient.API.UseCases.Clients.Delete;
 using ProductClient.API.UseCases.Clients.Get;
 using ProductClient.API.UseCases.Clients.Register;
 using ProductClient.API.UseCases.Clients.Update;
@@ -14,41 +15,39 @@ namespace ProductClient.API.Controllers
         [HttpPost]
         [ProducesResponseType(typeof(ResponseClientJson), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status400BadRequest)]
-        public IActionResult Register([FromBody] RequestClientJson request)
+        public async Task<IActionResult> Register([FromBody] RequestClientJson request)
         {
             var useCaseRegister = new RegisterClientUseCase();
 
-            var response = useCaseRegister.Execute(request);
+            var response = await useCaseRegister.Execute(request);
 
             return Created(string.Empty, response);
         }
 
         [HttpPut]
         [Route("{id}")]
-        [ProducesResponseType(typeof(ResponseClientJson), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status400BadRequest)]
-        public IActionResult Update(
-            [FromRoute] Guid id, 
-            [FromBody] RequestClientJson request)
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] RequestClientJson request)
         {
             var useCaseUpdateClient = new UpdateClientUseCase();
 
-            useCaseUpdateClient.Execute(id, request);
+            await useCaseUpdateClient.Execute(id, request);
 
             return NoContent();
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(ResponseAllClientsJson), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseAllClientJson), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public IActionResult GetAll() 
+        public async Task<IActionResult> GetAll() 
         {
             var useCaseGetAll = new GetAllClientsUseCase();
 
-            IQueryable<ResponseAllClientsJson> response = useCaseGetAll.Execute();
+            var response = await useCaseGetAll.Execute();
 
-            if (response.Count() == 0)
+            if (response.Count == 0)
                 return NoContent();
 
             return Ok(response);
@@ -56,15 +55,26 @@ namespace ProductClient.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public IActionResult GetById([FromRoute] Guid id) 
+        [ProducesResponseType(typeof(ResponseAllClientJson), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetById([FromRoute] Guid id) 
         {
-            return Ok();
+            var useCaseGetById = new GetClientByIdUseCase();
+            var users = await useCaseGetById.Execute(id);
+
+            return Ok(users);
         }
 
         [HttpDelete]
-        public IActionResult Delete() 
+        [Route("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete([FromRoute] Guid id) 
         {
-            return Ok();
+            var useCaseDelete = new DeleteClientUseCase();
+            await useCaseDelete.Execute(id);
+
+            return NoContent();
         }
     }
 }
