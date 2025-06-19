@@ -10,14 +10,14 @@ namespace ProductClient.API.Controllers
     public class ProductsController : ControllerBase
     {
         [HttpPost]
-        [ProducesResponseType(typeof(ResponseProductJson), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseProductJson), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> Register([FromBody] RequestProductJson request)
         {
             var registerUseCase = new RegisterProductUseCase();
             var response = await registerUseCase.Execute(request);
 
-            return Ok(response);
+            return Created(string.Empty, response);
         }
     }
 }
