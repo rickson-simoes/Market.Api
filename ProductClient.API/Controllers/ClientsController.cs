@@ -29,12 +29,12 @@ namespace ProductClient.API.Controllers
         [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status400BadRequest)]
         public IActionResult Update(
-            [FromRoute] Guid UserId, 
+            [FromRoute] Guid id, 
             [FromBody] RequestClientJson request)
         {
             var useCaseUpdateClient = new UpdateClientUseCase();
 
-            useCaseUpdateClient.Execute(UserId, request);
+            useCaseUpdateClient.Execute(id, request);
 
             return NoContent();
         }

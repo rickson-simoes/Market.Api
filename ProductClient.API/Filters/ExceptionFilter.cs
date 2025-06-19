@@ -9,15 +9,21 @@ namespace ProductClient.API.Filters
     {
         public void OnException(ExceptionContext context)
         {
-            if (context.Exception is ProductClientHubException productClientHubException)
+            switch(context.Exception)
             {
-                context.HttpContext.Response.StatusCode = (int)productClientHubException.GetHttpStatusCode();
-                context.Result = new ObjectResult(new ResponseErrorMessagesJson(productClientHubException.GetErrors()));
-
-            } else
-            {
-                ThrowUnkownError(context);
+                case ProductClientHubException productClientHubException:
+                {
+                    context.HttpContext.Response.StatusCode = (int)productClientHubException.GetHttpStatusCode();
+                    context.Result = new ObjectResult(new ResponseErrorMessagesJson(productClientHubException.GetErrors()));
+                    break;
+                }
+                default:
+                {
+                    ThrowUnkownError(context);
+                    break;
+                }
             }
+
         }
 
         private void ThrowUnkownError(ExceptionContext context)
