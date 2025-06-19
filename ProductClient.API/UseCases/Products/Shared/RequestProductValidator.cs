@@ -15,7 +15,7 @@ namespace ProductClient.API.UseCases.Products.Shared
                 .NotEmpty().WithMessage("Brand can't be null.")
                 .Length(1, 20).WithMessage("Brand must have only 20 characters max.");
             RuleFor(product => product.Price)
-                .NotEmpty().WithMessage("Price can't be free or empty.");
+                .GreaterThan(0).WithMessage("Price can't be 0.");
             RuleFor(product => product.ClientId)
                 .NotEmpty().WithMessage("Client ID not specified.");
         }
