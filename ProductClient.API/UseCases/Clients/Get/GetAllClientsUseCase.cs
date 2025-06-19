@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProductClient.API.Infrastructure;
-using ProductClient.Communication.Responses;
+using ProductClient.API.DTOs.Responses;
 
 namespace ProductClient.API.UseCases.Clients.Get
 {
@@ -10,10 +10,14 @@ namespace ProductClient.API.UseCases.Clients.Get
         {
             var dbContext = new ProductClientHubDbContext();
 
-            var clients = await dbContext.Clients.Select(client => new ResponseAllClientJson { 
-                Email = client.Email,
-                Name = client.Name
-            }).ToListAsync();
+            var clients = await dbContext.Clients
+                .Include(client => client.Products)
+                .Select(client => new ResponseAllClientJson
+                {
+                    Email = client.Email,
+                    Name = client.Name,
+                    Products = client.Products
+                }).ToListAsync();
 
             return clients;
         }

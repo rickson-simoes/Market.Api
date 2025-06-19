@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProductClient.API.DTOs.Requests;
+using ProductClient.API.DTOs.Responses;
 using ProductClient.API.UseCases.Clients.Delete;
 using ProductClient.API.UseCases.Clients.Get;
 using ProductClient.API.UseCases.Clients.Register;
 using ProductClient.API.UseCases.Clients.Update;
-using ProductClient.Communication.Requests;
-using ProductClient.Communication.Responses;
 
 namespace ProductClient.API.Controllers
 {

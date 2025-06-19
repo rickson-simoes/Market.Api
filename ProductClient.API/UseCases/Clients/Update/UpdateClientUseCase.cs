@@ -1,6 +1,6 @@
-﻿using ProductClient.API.Infrastructure;
+﻿using ProductClient.API.DTOs.Requests;
+using ProductClient.API.Infrastructure;
 using ProductClient.API.UseCases.Clients.Shared;
-using ProductClient.Communication.Requests;
 using ProductClient.Exceptions.ExceptionsBase;
 
 namespace ProductClient.API.UseCases.Clients.Update

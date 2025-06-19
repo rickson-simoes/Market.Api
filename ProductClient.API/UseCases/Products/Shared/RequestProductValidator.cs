@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using ProductClient.Communication.Requests;
+using ProductClient.API.DTOs.Requests;
 using ProductClient.Exceptions.ExceptionsBase;
 
 namespace ProductClient.API.UseCases.Products.Shared

@@ -1,9 +1,9 @@
-﻿using ProductClient.API.Entities;
+﻿using ProductClient.API.DTOs.Requests;
+using ProductClient.API.DTOs.Responses;
+using ProductClient.API.Entities;
 using ProductClient.API.Infrastructure;
 using ProductClient.API.UseCases.Clients.Shared;
 using ProductClient.API.UseCases.Products.Shared;
-using ProductClient.Communication.Requests;
-using ProductClient.Communication.Responses;
 
 namespace ProductClient.API.UseCases.Products.Register
 {

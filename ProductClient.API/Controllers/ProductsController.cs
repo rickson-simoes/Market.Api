@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProductClient.API.DTOs.Requests;
+using ProductClient.API.DTOs.Responses;
 using ProductClient.API.UseCases.Products.Register;
-using ProductClient.Communication.Requests;
-using ProductClient.Communication.Responses;
 
 namespace ProductClient.API.Controllers
 {

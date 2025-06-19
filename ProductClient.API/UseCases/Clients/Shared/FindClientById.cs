@@ -9,7 +9,9 @@ namespace ProductClient.API.UseCases.Clients.Shared
     {
         public static async Task<Client> Execute(ProductClientHubDbContext dbContext, Guid id)
         {
-            Client? user = await dbContext.Clients.FirstOrDefaultAsync(c => c.Id == id);
+            Client? user = await dbContext.Clients
+                .Include(f => f.Products)
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             if (user == null)
                 throw new ClientNotFoundException("User not found");

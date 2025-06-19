@@ -1,7 +1,6 @@
-﻿using ProductClient.API.Entities;
+﻿using ProductClient.API.DTOs.Responses;
 using ProductClient.API.Infrastructure;
 using ProductClient.API.UseCases.Clients.Shared;
-using ProductClient.Communication.Responses;
 
 namespace ProductClient.API.UseCases.Clients.Get
 {
@@ -17,6 +16,7 @@ namespace ProductClient.API.UseCases.Clients.Get
             {
                 Email = user.Email,
                 Name = user.Name,
+                Products = user.Products
             };
 
             return response;
