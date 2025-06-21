@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProductClient.API.DTOs.Requests;
 using ProductClient.API.DTOs.Responses;
+using ProductClient.API.UseCases.Products.Delete;
 using ProductClient.API.UseCases.Products.Register;
 
 namespace ProductClient.API.Controllers
@@ -20,6 +21,19 @@ namespace ProductClient.API.Controllers
             var response = await registerUseCase.Execute(id, request);
 
             return Created(string.Empty, response);
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete([FromRoute] Guid id)
+        {
+            var deleteUseCase = new DeleteProductUseCase();
+
+            await deleteUseCase.Execute(id);
+
+            return NoContent();
         }
     }
 }
