@@ -10,13 +10,14 @@ namespace ProductClient.API.Controllers
     public class ProductsController : ControllerBase
     {
         [HttpPost]
+        [Route("{id}")]
         [ProducesResponseType(typeof(ResponseProductJson), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> Register([FromBody] RequestProductJson request)
+        public async Task<IActionResult> Register([FromRoute] Guid id, [FromBody] RequestProductJson request)
         {
             var registerUseCase = new RegisterProductUseCase();
-            var response = await registerUseCase.Execute(request);
+            var response = await registerUseCase.Execute(id, request);
 
             return Created(string.Empty, response);
         }

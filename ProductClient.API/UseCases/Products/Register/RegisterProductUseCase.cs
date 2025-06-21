@@ -9,7 +9,7 @@ namespace ProductClient.API.UseCases.Products.Register
 {
     public class RegisterProductUseCase
     {
-        public async Task<ResponseProductJson> Execute(RequestProductJson request)
+        public async Task<ResponseProductJson> Execute(Guid id, RequestProductJson request)
         {
             var dbContext = new ProductClientHubDbContext();
 
@@ -22,7 +22,7 @@ namespace ProductClient.API.UseCases.Products.Register
                 Name = request.Name,
                 Brand = request.Brand,
                 Price = request.Price,
-                ClientId = request.ClientId
+                ClientId = id
             };
 
             await FindClientById.Execute(dbContext, product.ClientId);
