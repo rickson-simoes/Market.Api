@@ -3,6 +3,7 @@ using ProductClient.API.DTOs.Requests;
 using ProductClient.API.DTOs.Responses;
 using ProductClient.API.UseCases.Products.Delete;
 using ProductClient.API.UseCases.Products.Register;
+using ProductClient.API.UseCases.Products.Update;
 
 namespace ProductClient.API.Controllers
 {
@@ -32,8 +33,21 @@ namespace ProductClient.API.Controllers
             var deleteUseCase = new DeleteProductUseCase();
 
             await deleteUseCase.Execute(id);
-
             return NoContent();
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(typeof(ResponseErrorMessagesJson), StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] RequestProductJson req)
+        {
+            var updateUseCase = new UpdateProductUseCase();
+
+            var response = await updateUseCase.Execute(id, req);
+
+            return Ok(response);
         }
     }
 }
