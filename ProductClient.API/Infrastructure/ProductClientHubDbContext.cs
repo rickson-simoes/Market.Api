@@ -10,7 +10,9 @@ namespace ProductClient.API.Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=C:\\sqliteDB\\bd.db");
+            var currentDir = Directory.GetCurrentDirectory();
+            var dbPath = Path.Combine(currentDir, "Infrastructure", "bd.db");
+            optionsBuilder.UseSqlite($"Data Source={dbPath}");
         }
     }
 }
