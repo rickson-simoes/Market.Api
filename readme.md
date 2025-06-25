@@ -1,11 +1,11 @@
 ﻿<h1 align="center">🛒 MarketApi</h1>
 
----
 <h2>📝 Frameworks/libs:</h2>
+
 - Fluent validation
 - EF CORE
 - AspNetCore
----
+
 <h2>📝 Swagger Doc</h2>
 
 - Just build it up.
